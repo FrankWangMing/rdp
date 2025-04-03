@@ -1,4 +1,4 @@
-import { init, plugins } from '@alilc/lowcode-engine';
+import { init, plugins ,event} from '@alilc/lowcode-engine';
 import { createFetchHandler } from '@alilc/lowcode-datasource-fetch-handler'
 import EditorInitPlugin from './plugins/plugin-editor-init';
 import UndoRedoPlugin from '@alilc/lowcode-plugin-undo-redo';
@@ -27,22 +27,10 @@ async function registerPlugins() {
   await plugins.register(InjectPlugin);
 
   await plugins.register(EditorInitPlugin, {
-    scenarioName: 'general',
-    displayName: '综合场景',
+    scenarioName: 'RDP',
+    displayName: 'RDP-低代码',
     info: {
       urls: [
-        {
-          key: '设计器',
-          value: 'https://github.com/alibaba/lowcode-demo/tree/main/demo-general',
-        },
-        {
-          key: 'fusion-ui 物料',
-          value: 'https://github.com/alibaba/lowcode-materials/tree/main/packages/fusion-ui',
-        },
-        {
-          key: 'fusion 物料',
-          value: 'https://github.com/alibaba/lowcode-materials/tree/main/packages/fusion-lowcode-materials',
-        }
       ],
     },
   });
@@ -56,13 +44,13 @@ async function registerPlugins() {
 
   await plugins.register(SchemaPlugin, { isProjectSchema: true });
 
-  await plugins.register(ManualPlugin);
+  // await plugins.register(ManualPlugin);
 
   // 注册回退/前进
   await plugins.register(UndoRedoPlugin);
 
   // 注册中英文切换
-  await plugins.register(ZhEnPlugin);
+  // await plugins.register(ZhEnPlugin);
 
   await plugins.register(SetRefPropPlugin);
 
@@ -95,7 +83,7 @@ async function registerPlugins() {
   await plugins.register(CustomSetterSamplePlugin);
 
   // 设计器区域多语言切换
-  await plugins.register(SimulatorLocalePlugin);
+  // await plugins.register(SimulatorLocalePlugin);
 
   await plugins.register(lowcodePlugin);
 };
@@ -114,5 +102,14 @@ async function registerPlugins() {
     },
     appHelper,
     enableContextMenu: true,
+  }).then(()=>{
+    event.on("common:add",(e)=>{
+      console.log(e)
+    })
+
+    setTimeout(()=>{
+      event.emit("add",[1231])
+    },1000)
   });
 })();
+
