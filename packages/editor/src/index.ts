@@ -79,9 +79,6 @@ async function registerPlugins() {
 
   await plugins.register(CustomSetterSamplePlugin);
 
-  // 设计器区域多语言切换
-  // await plugins.register(SimulatorLocalePlugin);
-
   await plugins.register(lowcodePlugin);
 };
 
@@ -99,14 +96,6 @@ async function registerPlugins() {
     },
     appHelper,
     enableContextMenu: true,
-  }).then(() => {
-    event.on("common:add", (e) => {
-      console.log(e)
-    })
-
-    setTimeout(() => {
-      event.emit("add", [1231])
-    }, 1000)
-  });
+  })
 })();
 

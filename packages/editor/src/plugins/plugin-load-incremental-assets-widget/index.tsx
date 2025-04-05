@@ -147,8 +147,7 @@ const loadIncrementalAssets = () => {
 const LoadIncrementalAssetsWidgetPlugin = (ctx: IPublicModelPluginContext) => {
   return {
     async init() {
-      const { skeleton } = ctx;
-
+      const { skeleton, event } = ctx;
       skeleton.add({
         name: 'loadAssetsSample',
         area: 'topArea',
@@ -157,14 +156,10 @@ const LoadIncrementalAssetsWidgetPlugin = (ctx: IPublicModelPluginContext) => {
           align: 'right',
           width: 80,
         },
-        content: (
-          <Button onClick={loadIncrementalAssets}>
-            异步加载资源
-          </Button>
-        ),
+        content: <Button onClick={loadIncrementalAssets}>异步加载资源</Button>,
       });
     },
   };
-}
+};
 LoadIncrementalAssetsWidgetPlugin.pluginName = 'LoadIncrementalAssetsWidgetPlugin';
 export default LoadIncrementalAssetsWidgetPlugin;
