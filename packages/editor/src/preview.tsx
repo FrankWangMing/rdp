@@ -40,8 +40,8 @@ const SamplePreview = () => {
     });
     const pageSchema = componentsTree[0];
 
-    const libraryMap:any = {};
-    const libraryAsset:any[] = [];
+    const libraryMap: any = {};
+    const libraryAsset: any[] = [];
     packages.forEach(({ package: _package, library, urls, renderUrls }) => {
       libraryMap[_package] = library;
       if (renderUrls) {
@@ -108,4 +108,3 @@ const SamplePreview = () => {
 };
 
 ReactDOM.render(<SamplePreview />, document.getElementById('ice-container'));
-

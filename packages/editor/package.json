@@ -6,6 +6,7 @@
   "repository": "git@github.com:alibaba/lowcode-demo.git",
   "license": "MIT",
   "scripts": {
+    "dev": "pnpm run start",
     "start": "build-scripts start --disable-reload --port 5556",
     "build": "build-scripts build",
     "prepublishOnly": "npm run build",

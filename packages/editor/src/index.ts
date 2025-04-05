@@ -1,13 +1,11 @@
-import { init, plugins ,event} from '@alilc/lowcode-engine';
+import { init, plugins, event } from '@alilc/lowcode-engine';
 import { createFetchHandler } from '@alilc/lowcode-datasource-fetch-handler'
 import EditorInitPlugin from './plugins/plugin-editor-init';
 import UndoRedoPlugin from '@alilc/lowcode-plugin-undo-redo';
-import ZhEnPlugin from '@alilc/lowcode-plugin-zh-en';
 import CodeGenPlugin from '@alilc/lowcode-plugin-code-generator';
 import DataSourcePanePlugin from '@alilc/lowcode-plugin-datasource-pane';
 import SchemaPlugin from '@alilc/lowcode-plugin-schema';
 import CodeEditorPlugin from "@alilc/lowcode-plugin-code-editor";
-import ManualPlugin from "@alilc/lowcode-plugin-manual";
 import InjectPlugin from '@alilc/lowcode-plugin-inject';
 import SimulatorResizerPlugin from '@alilc/lowcode-plugin-simulator-select';
 import ComponentPanelPlugin from '@alilc/lowcode-plugin-components-pane';
@@ -18,7 +16,6 @@ import PreviewSamplePlugin from './plugins/plugin-preview-sample';
 import CustomSetterSamplePlugin from './plugins/plugin-custom-setter-sample';
 import SetRefPropPlugin from '@alilc/lowcode-plugin-set-ref-prop';
 import LogoSamplePlugin from './plugins/plugin-logo-sample';
-import SimulatorLocalePlugin from './plugins/plugin-simulator-locale';
 import lowcodePlugin from './plugins/plugin-lowcode-component';
 import appHelper from './appHelper';
 import './global.scss';
@@ -102,14 +99,14 @@ async function registerPlugins() {
     },
     appHelper,
     enableContextMenu: true,
-  }).then(()=>{
-    event.on("common:add",(e)=>{
+  }).then(() => {
+    event.on("common:add", (e) => {
       console.log(e)
     })
 
-    setTimeout(()=>{
-      event.emit("add",[1231])
-    },1000)
+    setTimeout(() => {
+      event.emit("add", [1231])
+    }, 1000)
   });
 })();
 
