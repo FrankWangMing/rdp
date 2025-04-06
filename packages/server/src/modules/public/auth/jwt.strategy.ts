@@ -5,6 +5,9 @@ import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
+  validate(...args: any[]): unknown {
+    throw new Error('Method not implemented.')
+  }
   constructor(readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

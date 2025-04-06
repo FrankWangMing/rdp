@@ -10,7 +10,6 @@ import type {
   SwaggerConfig
 } from 'src/common/configs/config.interface'
 import { TransformInterceptor } from './common/interception/transform.interception'
-import { RedisIoAdapter } from './common/adapters/redis-io.adapter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)

@@ -4,8 +4,10 @@ import { JwtService } from '@nestjs/jwt'
 import { Token } from './models/token.model'
 import { SecurityConfig } from 'src/common/configs/config.interface'
 import { PrismaService } from 'nestjs-prisma'
-import { JwtDto } from 'src/dto/users/jwt.dto'
 import { log } from 'console'
+import { User } from '@prisma/client'
+import { JwtDto } from './jwt.dto'
+import { IPayload } from './interfaces'
 
 @Injectable()
 export class AuthService {
@@ -13,18 +15,16 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private prisma: PrismaService
-  ) {}
+  ) { }
 
-  async generateTokens(payload: { userId: string }): Promise<Token> {
+  async generateTokens(payload: IPayload): Promise<Token> {
     return {
       accessToken: await this.generateAccessToken(payload),
       refreshToken: await this.generateRefreshToken(payload)
     }
   }
 
-  private async generateAccessToken(payload: {
-    userId: string
-  }): Promise<string> {
+  private async generateAccessToken(payload: IPayload): Promise<string> {
     log(this.configService.get('JWT_REFRESH_SECRET'))
     return await this.jwtService.signAsync(payload, {
       secret: this.configService.get('JWT_REFRESH_SECRET'),
@@ -32,9 +32,7 @@ export class AuthService {
     })
   }
 
-  private async generateRefreshToken(payload: {
-    userId: string
-  }): Promise<string> {
+  private async generateRefreshToken(payload: IPayload): Promise<string> {
     const securityConfig = this.configService.get<SecurityConfig>('security')
     return await this.jwtService.signAsync(payload, {
       secret: this.configService.get('JWT_REFRESH_SECRET'),
@@ -44,49 +42,21 @@ export class AuthService {
 
   refreshToken(token: string) {
     try {
-      const { userId } = this.jwtService.verify(token, {
+      const { email } = this.jwtService.verify(token, {
         secret: this.configService.get('JWT_REFRESH_SECRET')
       })
       return this.generateTokens({
-        userId
+        email,
       })
     } catch (e) {
       throw new UnauthorizedException()
     }
   }
 
-  async validateUser(payload: JwtDto, role): Promise<boolean> {
-    const userId = payload.userId
-
-    let result
-    switch (role) {
-      case 'admin':
-        result = this.prisma.admin.findUnique({
-          where: { id: userId }
-        })
-        break
-      case 'merchant':
-        result = this.prisma.merchantUser.findUnique({
-          where: { id: userId },
-          include: {
-            shop: {}
-          }
-        })
-        break
-      case 'wholesaler':
-        result = this.prisma.wholesalerUser.findUnique({
-          where: { id: userId }
-        })
-        break
-      case 'driver':
-        result = this.prisma.driverUser.findUnique({
-          where: { id: userId }
-        })
-        break
-    }
-    if (!(await result)) {
-      return null
-    }
-    return await result
+  async validateUser(payload: JwtDto): Promise<User> {
+    const userInfo = await this.prisma.user.findUnique({
+      where: { email: payload.email }
+    })
+    return await userInfo
   }
 }

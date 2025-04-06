@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common'
-import { UserModule } from './user/user.module'
-import { RoleService } from './role/role.service'
-import { RoleController } from './role/role.controller'
+import { AuthModule } from './auth/auth.module'
+import { PrismaClient } from '@prisma/client'
+import { HttpModule } from '@nestjs/axios'
 
 @Module({
-  imports: [UserModule],
-  providers: [RoleService],
-  controllers: [RoleController],
-  exports: [UserModule]
+  imports: [
+    AuthModule,
+    HttpModule
+  ],
+  providers: [PrismaClient],
+  controllers: [],
+  exports: [
+    AuthModule,
+    PrismaClient,
+    HttpModule,
+  ]
 })
-export class PublicModule {}
+export class PublicModule { }

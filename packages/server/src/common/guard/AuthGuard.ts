@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     private jwtService: JwtService,
     private auth: AuthService,
     readonly configService: ConfigService
-  ) {}
+  ) { }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest()
     const token = this.extractTokenFromHeader(request)
@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate {
 
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
-      request.user = await this.auth.validateUser(payload, role)
+      request.user = await this.auth.validateUser(payload)
 
       if (!isNull(request.user)) {
         return true
