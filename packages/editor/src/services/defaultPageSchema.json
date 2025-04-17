@@ -305,30 +305,6 @@
                               "isLocked": false,
                               "condition": true,
                               "conditionGroup": ""
-                            },
-                            {
-                              "componentName": "NextText",
-                              "id": "node_oclfjqcf7z15",
-                              "props": {
-                                "type": "inherit",
-                                "children": {
-                                  "type": "JSExpression",
-                                  "value": "this.getHelloWorldText2()",
-                                  "mock": "基于 Ali-Lowcode-Engine 快速打造高生产力的低代码研发平台, 基于自然布局体系快速搭建页面"
-                                },
-                                "mark": false,
-                                "code": false,
-                                "delete": false,
-                                "underline": false,
-                                "strong": false,
-                                "prefix": "",
-                                "classname": ""
-                              },
-                              "hidden": false,
-                              "title": "",
-                              "isLocked": false,
-                              "condition": true,
-                              "conditionGroup": ""
                             }
                           ]
                         }
